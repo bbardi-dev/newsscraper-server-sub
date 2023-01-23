@@ -6,6 +6,8 @@ import { ScrapeTarget } from "./scrapeTargets";
 export async function launchPuppeteer(): Promise<Browser> {
   return await puppeteer.launch({
     args: ["--no-sandbox", "--disable-setuid-sandbox"],
+    headless: true,
+    defaultViewport: null,
   });
 }
 
