@@ -31,7 +31,6 @@ export async function scrapeArticlesForPage({ pageToGo, scrapeSelector }: Scrape
     const browser = await launchPuppeteer();
     const page = await browser.newPage();
     await page.goto(pageToGo, {
-      waitUntil: 'networkidle2',
       timeout: 0
     });
 
