@@ -6,8 +6,7 @@ import { ScrapeTarget } from "./scrapeTargets";
 export async function launchPuppeteer(): Promise<Browser> {
   return await puppeteer.launch({
     args: ["--no-sandbox", "--disable-setuid-sandbox"],
-    headless: true,
-    defaultViewport: null,
+    headless: false,
   });
 }
 
@@ -30,7 +29,11 @@ export async function scrapeArticlesForPage({ pageToGo, scrapeSelector }: Scrape
   try {
     const browser = await launchPuppeteer();
     const page = await browser.newPage();
-    await page.goto(pageToGo);
+    await page.goto(pageToGo, {
+        waitUntil: 'load',
+        // Remove the timeout
+        timeout: 0
+    });
 
     const final: Article[] = await getArticlesForCurrentPage(page, scrapeSelector);
 
