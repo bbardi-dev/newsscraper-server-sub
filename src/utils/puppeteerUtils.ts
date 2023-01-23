@@ -30,7 +30,10 @@ export async function scrapeArticlesForPage({ pageToGo, scrapeSelector }: Scrape
   try {
     const browser = await launchPuppeteer();
     const page = await browser.newPage();
-    await page.goto(pageToGo);
+    await page.goto(pageToGo, {
+      waitUntil: 'networkidle2',
+      timeout: 0
+    });
 
     const final: Article[] = await getArticlesForCurrentPage(page, scrapeSelector);
 
